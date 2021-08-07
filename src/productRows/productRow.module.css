@@ -1,0 +1,19 @@
+@media (max-width: 500px) {
+    .cellAmount {
+        width: 21%;
+    }
+}
+
+@media (min-width: 500px) {
+    .cellAmount {
+        width: 13%;
+    }
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.cellButton {
+    width: 5%;
+}
