@@ -9,7 +9,8 @@ let conf = {
 		publicPath: '/dist/'
 	},
 	devServer: {
-		overlay: true
+		overlay: true,
+		historyApiFallback: true
 	},
 	module: {
 		rules: [

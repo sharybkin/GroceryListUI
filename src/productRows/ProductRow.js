@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './productRow.module.css';
+import productListItemStore from './../store/productListItem';
 
 ProductRow.propTypes = {
-    id: PropTypes.string.isRequired,
-    productName: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
-    status: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onEdit: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
+    // id: PropTypes.string.isRequired,
+    // productName: PropTypes.string.isRequired,
+    // amount: PropTypes.number.isRequired,
+    // status: PropTypes.number.isRequired,
+    // onChange: PropTypes.func.isRequired,
+    // onEdit: PropTypes.func.isRequired,
+    // onDelete: PropTypes.func.isRequired
 }
 
-function ProductRow({id, productName, amount, status, onChange, onEdit, onDelete}){
+function ProductRow({id, onEdit}){
+
+    let product = productListItemStore.getProductById(id);
+    let productName = product.productName;
+    let amount = product.amount;
+    let status = product.status;
 
     let changeStatus = () => {
         let newStatus = status === 1 ? 0 : 1;
-        onChange(id, newStatus);
+        productListItemStore.changeStatus(id, newStatus);
         console.log(productName + "was changed. Status: " + newStatus);
+    }
+
+    let onDelete = (id) => {
+        productListItemStore.delete(id);
     }
 
     let buttonStyle = {

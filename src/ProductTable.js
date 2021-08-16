@@ -2,36 +2,23 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditableProductRow from './productRows/EditableProductRow';
 import ProductRow from './productRows/ProductRow';
+import { observer } from 'mobx-react-lite';
+import productListItemStore from './store/productListItem';
 
 ProductTable.propTypes = {
     
 }
 
 
-function ProductTable({products, onChangeStatus, onApplyChange, onDelete}){
+function ProductTable(){
     let [editableProductId, setEditableProductId] = useState("");
-
-    let getProduct = (id) => {
-        let product;
-        
-        products.forEach(pr => {
-            if(pr.id === id){
-                console.log(pr.productName);
-                product = pr;
-            }
-        });
-
-        return product;
-    }
 
     let onEdit = (id) => {
         setEditableProductId(id);
         console.log("onEdit");
     }
 
-    let onApplyEdit = (id, productName, amount) => {
-        
-        onApplyChange(id, productName, amount);
+    let onApplyEdit = () => {        
         setEditableProductId("")
     }
 
@@ -41,18 +28,16 @@ function ProductTable({products, onChangeStatus, onApplyChange, onDelete}){
 
     let getProductRow = (pr) => {
         return (
-        <ProductRow key = {pr.id} id = {pr.id} productName = {pr.productName} 
-                amount = {pr.amount} status = {pr.status} 
-                onChange = {onChangeStatus} onEdit = {onEdit} onDelete = {onDelete}/>);
+        <ProductRow key = {pr.id} id = {pr.id} onEdit = {onEdit}/>);
     }
 
     let getEditableRow = (pr) => {
         return (
-        <EditableProductRow key = {pr.id} id ={pr.id} productName = {pr.productName} amount = {pr.amount}
+        <EditableProductRow key = {pr.id} id ={pr.id} 
             onApply = {onApplyEdit} onCancel = {onCancelEdit} />);
     }
 
-    let productRows = products.map((pr) => (
+    let productRows = productListItemStore.products.map((pr) => (
          pr.id === editableProductId ? getEditableRow(pr) : getProductRow(pr)
     ));
 
@@ -74,4 +59,4 @@ function ProductTable({products, onChangeStatus, onApplyChange, onDelete}){
     );
 }
 
-export default ProductTable;
+export default observer(ProductTable);

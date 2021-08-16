@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import productListItemStore from './store/productListItem';
 
-AddingProduct.propTypes = {
-    listId: PropTypes.string.isRequired,
-    onAdd: PropTypes.func.isRequired
-}
+// AddingProduct.propTypes = {
+//     listId: PropTypes.string.isRequired,
+//     onAdd: PropTypes.func.isRequired
+// }
 
-function AddingProduct({listId, onAdd}){
+function AddingProduct({listId}){
 
     let [productName, setProduct] = useState("");
     let [amount, setAmount] = useState("");
@@ -23,10 +24,10 @@ function AddingProduct({listId, onAdd}){
         let id = "799f675d-707e-462c-8cfc-22566badb266";
         let status = 0;
         amount = !isNaN(amount) ? 1 : amount;
-        console.log(amount);
-        onAdd(id, productName, amount, status);
+        productListItemStore.add(id, productName, amount, status);
         setAmount("");
         setProduct("");
+        console.log("Product was added to ", listId)
     }
 
     const handleKeyDown = (event) => {

@@ -1,19 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './productRow.module.css';
+import productListItemStore from './../store/productListItem';
 
-EditableProductRow.propTypes = {
-    id: PropTypes.string.isRequired,
-    productName: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
-    onApply: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
-}
+// EditableProductRow.propTypes = {
+//     id: PropTypes.string.isRequired,
+//     productName: PropTypes.string.isRequired,
+//     amount: PropTypes.number.isRequired,
+//     onApply: PropTypes.func.isRequired,
+//     onCancel: PropTypes.func.isRequired
+// }
 
-function EditableProductRow({id, productName, amount, onApply, onCancel}){
+function EditableProductRow({id, onApply, onCancel}){
 
     let newProductName;
     let newAmount;
+    
+    let product = productListItemStore.getProductById(id);
+    let productName = product.productName;
+    let amount = product.amount;
+
+    console.log(product.productName);
 
     let setAmount = (e) => {
         newAmount =  parseFloat(e.target.value);
@@ -24,8 +31,9 @@ function EditableProductRow({id, productName, amount, onApply, onCancel}){
     }
 
     let applyChanges = () => {
-        onApply(id, !(newProductName) ? productName : newProductName, 
+        productListItemStore.changeDetails(id, !(newProductName) ? productName : newProductName, 
         !(newAmount) ? amount : newAmount);
+        onApply();
         console.log(id, "was applied");
     }
 
