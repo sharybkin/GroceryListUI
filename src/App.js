@@ -4,6 +4,7 @@ import Navigation from './Navigation';
 import Container from '../node_modules/react-bootstrap/esm/Container';
 import productListStore from './store/productList';
 
+
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -13,11 +14,7 @@ import {
 
 function App(){
 
-	let productLists = productListStore.lists.map((pl) => (
-		<Route key = {pl.id} path = {"/list/" + pl.id} exact = {true}>
-			<ProductListEditor listInfo = {pl}/>
-		</Route>
-   ));
+   let listExists = true;
 
 	return (
 	<Router>
@@ -26,10 +23,16 @@ function App(){
 				<Navigation/>
 			</header>
 			<main>
-				<span>Path : {location.pathname}</span>
+				{!listExists && 
 				<Container style = {{marginTop: "70px"}}>
-					{productLists}
-				</Container>
+					<h2 class="text-danger">List not found</h2>
+				</Container>}
+				{listExists && 
+				<Container style = {{marginTop: "70px"}}>
+					<Route path = {"/list/:listId"} exact = {true}>
+						<ProductListEditor/>
+					</Route>
+				</Container>}
 			</main>
 			<footer>
 			</footer>

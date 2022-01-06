@@ -10,8 +10,11 @@ ProductTable.propTypes = {
 }
 
 
-function ProductTable(){
+function ProductTable({listId}){
     let [editableProductId, setEditableProductId] = useState("");
+
+    productListItemStore.loadByListId(listId);
+    console.log("ListId = ", listId);
 
     let onEdit = (id) => {
         setEditableProductId(id);
@@ -22,10 +25,6 @@ function ProductTable(){
         setEditableProductId("")
     }
 
-    let onCancelEdit = () => {
-        setEditableProductId("");
-    }
-
     let getProductRow = (pr) => {
         return (
         <ProductRow key = {pr.id} id = {pr.id} onEdit = {onEdit}/>);
@@ -34,7 +33,7 @@ function ProductTable(){
     let getEditableRow = (pr) => {
         return (
         <EditableProductRow key = {pr.id} id ={pr.id} 
-            onApply = {onApplyEdit} onCancel = {onCancelEdit} />);
+            onApply = {onApplyEdit} onCancel = {onApplyEdit} />);
     }
 
     let productRows = productListItemStore.products.map((pr) => (

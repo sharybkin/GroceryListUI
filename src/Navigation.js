@@ -2,9 +2,12 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Switch, Route, Link } from 'react-router-dom';
 import productListStore from './store/productList';
+import {observer} from 'mobx-react-lite';
 
 function Navigation(){
     
+    productListStore.load();
+
     let links = productListStore.lists.map((pl) => (
             <Nav.Link key={pl.id} as={Link} to={"/list/" + pl.id}>{pl.name}</Nav.Link>
        ));
@@ -25,4 +28,4 @@ function Navigation(){
     );
 }
 
-export default Navigation;
+export default observer(Navigation);

@@ -17,14 +17,16 @@ function AddingProduct({listId}){
     }
 
     let onInputAmount = (e) => {
-        amount = setAmount(parseFloat(e.target.value));
+        let value = parseFloat(e.target.value);
+        
+        value = isNaN(value) ? "" : value;
+        setAmount(value);
     }
 
     let addProduct = () => {
-        let id = "799f675d-707e-462c-8cfc-22566badb266";
-        let status = 0;
-        amount = !isNaN(amount) ? 1 : amount;
-        productListItemStore.add(id, productName, amount, status);
+        console.log(amount);
+        amount = amount == "" ? 1 : amount;
+        productListItemStore.add(productName, amount);
         setAmount("");
         setProduct("");
         console.log("Product was added to ", listId)
